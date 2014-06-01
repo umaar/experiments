@@ -25,25 +25,29 @@
 		this.width = this.canvas.width;
 		this.height = this.canvas.height;
 		this.ctx = this.canvas.getContext('2d');
-		this.invaderSize = 10;
+		this.invaderSize = 20;
 		this.rect = {
-			// x: (this.width/2) - this.invaderSize/2,
-			// y: (this.height - this.invaderSize) - this.invaderSize / 2,
 			width: this.invaderSize,
 			height: this.invaderSize
 		};
 
 		this.invaders = [];
 		this.initInvaders();
+		this.patrolX = 5;
+		this.speedX = 1;
 	}
 
 	Invader.prototype.initInvaders = function() {
-		this.add({
-			x: 10,
-			y: 20,
-			width: this.rect.width,
-			height: this.rect.width
-		});
+		for (var i=0; i<15; i++) {
+			var x = ((i % 5) * 40) + 5;
+			var y = ((i % 3) * 40) + 20;
+			this.add({
+				x: x,
+				y: y,
+				width: this.rect.width,
+				height: this.rect.width
+			});
+		}
 	};
 
 	Invader.prototype.update = function() {
@@ -61,9 +65,16 @@
 
 	Invader.prototype.draw = function() {
 		var rect = this.rect;
+		this.ctx.fillStyle="#F09EB8";
+		this.patrolX += this.speedX;
+
+		// (canvas width - invader[last].x) - invader[last].width
+		if (this.patrolX >= 120 || this.patrolX <= 0) {
+			this.speedX = -this.speedX;
+		}
 
 		this.invaders.forEach(function eachInvader(invader, index) {
-				this.ctx.fillRect( invader.x, invader.y, rect.width, rect.height);
+				this.ctx.fillRect(invader.x += this.speedX, invader.y, rect.width, rect.height);
 		}, this);
 	};
 
