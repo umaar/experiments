@@ -1,26 +1,12 @@
 
+var stream = require('stream');
+var util = require('util');
+
 var request = require("request");
 var credentials = require("./credentials");
 var username = credentials.username;
 var password = credentials.password;
 var url = "http://countdown.api.tfl.gov.uk/interfaces/ura/stream_V1";
-
-// var request = http.request(options, function handleResponse(response) {
-// 	console.log("## Response: \n\n", response.statusCode);
-
-// 	response.setEncoding("utf8");
-
-// 	response.on("data", function onChunk(chunk) {
-// 		console.log("### Chunk: \n\n", chunk);
-// 	});
-// });
-
-// request.on("error", function onError(err) {
-// 	console.log("## Error: \n\n", err);
-// 	console.log("err.message", err.message)
-// });
-
-// request.end();
 
 var options = {
 	url: url,
@@ -31,17 +17,47 @@ var options = {
 	}
 };
 
-console.log("making http request");
+function handleData(data) {
+	data = data.toString().split("\n");
+	data.pop();
+	data.shift();
+	data.forEach(function(item) {
+		var arr = item.replace(/\[|\]|"/g, "").split(",");
+		if (item.length) {
+			var data = {
+				type: arr[0],
+				place: arr[1],
+				bus: arr[2],
+				time: arr[3].replace(/(\r\n|\n|\r)/gm,"")
+			};
+			console.log(data);
+		}
+	});
+}
 
-// request(options, function(error, response, body) {
-// 	console.log('what');
-// 	console.log(error, response, body);
-// });
+function StringStream() {
+	stream.Stream.call(this);
+	this.writable = true;
+}
 
-var s = require('stream').Readable;
+util.inherits(StringStream, stream.Stream);
 
-s.on("data", function function_name (argument) {
-	console.log("data");
+StringStream.prototype.write = function(data) {
+	if (data && data.length) {
+		this.emit('data', data);
+	}
+};
+
+StringStream.prototype.end = function(data) {
+	this.emit('end');
+};
+
+var stream = new StringStream();
+
+stream.on('data', handleData);
+
+stream.on('end', function() {
+	console.log("End");
 });
 
-request(options).pipe(s);
+request(options).pipe(stream);
