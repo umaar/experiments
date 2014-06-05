@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "request": "~2.36.0",
+    "socket.io": "~1.0.4"
+  }
+}

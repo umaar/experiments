@@ -8,6 +8,9 @@ var username = credentials.username;
 var password = credentials.password;
 var url = "http://countdown.api.tfl.gov.uk/interfaces/ura/stream_V1";
 
+var io = require('socket.io')(9997);
+
+
 var options = {
 	url: url,
 	auth: {
@@ -30,7 +33,8 @@ function handleData(data) {
 				bus: arr[2],
 				time: arr[3].replace(/(\r\n|\n|\r)/gm,"")
 			};
-			console.log(data);
+			// console.log(data);
+			io.emit('update', data);
 		}
 	});
 }
@@ -61,3 +65,12 @@ stream.on('end', function() {
 });
 
 request(options).pipe(stream);
+
+io.on('connection', function (socket) {
+	io.emit('update', "Hello and welcome!");
+
+
+	socket.on('disconnect', function () {
+		io.sockets.emit('user disconnected');
+	});
+});
