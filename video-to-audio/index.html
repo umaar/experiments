@@ -3,10 +3,42 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Extraction test</title>
+<style>
+
+body {
+	font-family: Verdana;
+	font-size: 16px;
+	padding: 5%;
+	margin: 5%;
+}
+
+.container {
+	max-width: 660px;
+	padding: 20px;
+	border: 1px solid #ccc;
+	text-align: center;
+}
+
+ol {
+	text-align: left;
+}
+
+</style>
 </head>
 <body>
 
-<video controls src="video/tree.mp4"></video>
+<div class="container">
+
+	<video controls src="video/tree.mp4"></video>
+
+	<h6>Retrieve a wave audio file for the portion of video you played.</h6>
+	<ol>
+		<li>Start playing the video.</li>
+		<li>Pause at some point in the future.</li>
+		<li>Receive a download of your audio, recorded using the Web Audio API.</li>
+	</ol>
+
+</div>
 
 <script src="js/recorder.js"></script>
 <script src="js/main.js"></script>

@@ -1,31 +1,43 @@
 (function() {
 
-	function extractAudio() {
+	function startRecord() {
+		this.record();
+	}
+
+	function exportReady(blob) {
+		Recorder.forceDownload(blob);
+		this.stop();
+		this.clear();
+	}
+
+	function stopRecord() {
+		this.exportWAV(exportReady.bind(this));
+	}
+
+	function attachVideoEvents(video, recorder) {
+		video.addEventListener('play', startRecord.bind(recorder));
+		video.addEventListener('pause', stopRecord.bind(recorder));
+	}
+
+	function initRecorder(video) {
 		var context = new webkitAudioContext();
-		var video = document.querySelector('video');
 		var mediaSourceNode = context.createMediaElementSource(video);
 		var analyserNode = context.createAnalyser();
 		mediaSourceNode.connect(analyserNode);
 		analyserNode.connect(context.destination);
-
-		var rec = new Recorder( analyserNode, {
+		return new Recorder(analyserNode, {
 			workerPath: 'js/recorderWorker.js'
 		});
+	}
 
-		rec.record();
-
-		video.play();
-		setTimeout(function delay() {
-			rec.exportWAV(function(blob) {
-				Recorder.forceDownload(blob);
-			});
-			rec.stop();
-			rec.clear();
-		}, 2000);
+	function videoToAudio() {
+		var video = document.querySelector('video');
+		var recorder = initRecorder(video);
+		attachVideoEvents(video, recorder);
 	}
 
 	function autorun() {
-		extractAudio();
+		videoToAudio();
 	}
 
 	if (window.addEventListener) window.addEventListener("load", autorun, false);
