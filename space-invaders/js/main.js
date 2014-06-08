@@ -1,12 +1,34 @@
 (function main () {
 
+	var game;
+
 	function Game (opts) {
 		this.canvas = opts.canvas;
 		this.width = this.canvas.width;
 		this.height = this.canvas.height;
 		this.ctx = this.canvas.getContext('2d');
 		this.player = new Player( this.canvas );
-		this.invader = new Invader( this.canvas );
+		this.bodies = [];
+		this.bodies = this.bodies.concat(new Player( this.canvas));
+		this.bodies = this.bodies.concat( createInvaders.bind(this) );
+	}
+
+	Game.prototype.addBody = function(body) {
+		this.bodies = this.bodies.concat(body);
+	};
+
+	function createInvaders() {
+		for (var i=0; i<15; i++) {
+			var x = ((i % 5) * 40) + 5;
+			var y = ((i % 3) * 40) + 20;
+			game.addBody(new Invader({
+				canvas: this.canvas,
+				x: x,
+				y: y,
+				width: this.rect.width,
+				height: this.rect.width
+			}));
+		}
 	}
 
 	Game.prototype.start = function() {
@@ -16,51 +38,31 @@
 	Game.prototype.update = function() {
 		this.ctx.clearRect(0,0,this.width, this.height);
 		this.player.update();
-		this.invader.update();
+		this.bodies.forEach(function forEachBody(body) {
+			body.update();
+		});
 		requestAnimationFrame( this.update.bind(this) );
 	};
 
-	function Invader (canvas) {
-		this.canvas = canvas;
+	function Invader (opts) {
+		this.canvas = opts.canvas;
 		this.width = this.canvas.width;
 		this.height = this.canvas.height;
 		this.ctx = this.canvas.getContext('2d');
 		this.invaderSize = 20;
 		this.rect = {
-			width: this.invaderSize,
-			height: this.invaderSize
+			width: opts.width,
+			height: opts.height,
+			x: opts.x,
+			y: opts.y
 		};
 
-		this.invaders = [];
-		this.initInvaders();
 		this.patrolX = 5;
 		this.speedX = 1;
 	}
 
-	Invader.prototype.initInvaders = function() {
-		for (var i=0; i<15; i++) {
-			var x = ((i % 5) * 40) + 5;
-			var y = ((i % 3) * 40) + 20;
-			this.add({
-				x: x,
-				y: y,
-				width: this.rect.width,
-				height: this.rect.width
-			});
-		}
-	};
-
 	Invader.prototype.update = function() {
 		this.draw();
-	};
-
-	Invader.prototype.add = function(opts) {
-		this.invaders.push({
-			x: opts.x,
-			y: opts.y,
-			width: this.rect.width,
-			height: this.rect.height
-		});
 	};
 
 	Invader.prototype.draw = function() {
@@ -196,7 +198,7 @@
 
 
 	function start () {
-		var game = new Game({
+		game = new Game({
 			canvas: document.querySelector('.game-canvas')
 		});
 		game.start();
