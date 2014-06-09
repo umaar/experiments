@@ -9,8 +9,9 @@
 		this.ctx = this.canvas.getContext('2d');
 		this.player = new Player( this.canvas );
 		this.bodies = [];
-		this.bodies = this.bodies.concat(new Player( this.canvas));
-		this.bodies = this.bodies.concat( createInvaders.bind(this) );
+		// this.bodies = this.bodies.concat(new Player( this.canvas));
+		var bounded = createInvaders.bind(this);
+		this.bodies = this.bodies.concat( bounded() );
 	}
 
 	Game.prototype.addBody = function(body) {
@@ -18,17 +19,17 @@
 	};
 
 	function createInvaders() {
+		var invaders = [];
 		for (var i=0; i<15; i++) {
 			var x = ((i % 5) * 40) + 5;
 			var y = ((i % 3) * 40) + 20;
-			game.addBody(new Invader({
+			invaders.push(new Invader({
 				canvas: this.canvas,
 				x: x,
-				y: y,
-				width: this.rect.width,
-				height: this.rect.width
+				y: y
 			}));
 		}
+		return invaders;
 	}
 
 	Game.prototype.start = function() {
@@ -51,8 +52,8 @@
 		this.ctx = this.canvas.getContext('2d');
 		this.invaderSize = 20;
 		this.rect = {
-			width: opts.width,
-			height: opts.height,
+			width: this.invaderSize,
+			height: this.invaderSize,
 			x: opts.x,
 			y: opts.y
 		};
@@ -75,9 +76,7 @@
 			this.speedX = -this.speedX;
 		}
 
-		this.invaders.forEach(function eachInvader(invader, index) {
-				this.ctx.fillRect(invader.x += this.speedX, invader.y, rect.width, rect.height);
-		}, this);
+		this.ctx.fillRect(rect.x += this.speedX, rect.y, rect.width, rect.height);
 	};
 
 
