@@ -9,14 +9,25 @@
 		this.ctx = this.canvas.getContext('2d');
 		this.player = new Player( this.canvas );
 		this.bodies = [];
-		// this.bodies = this.bodies.concat(new Player( this.canvas));
-		var bounded = createInvaders.bind(this);
-		this.bodies = this.bodies.concat( bounded() );
+
+		this.bodies = this.bodies.concat(new Player( this.canvas));
+
+		var boundedInvaders = createInvaders.bind(this);
+		this.bodies = this.bodies.concat( boundedInvaders() );
 	}
 
 	Game.prototype.addBody = function(body) {
 		this.bodies = this.bodies.concat(body);
 	};
+
+	Game.prototype.removeBody = function(body) {
+		var index = this.bodies.indexOf(body);
+		this.bodies.splice(index, 1);
+	};
+
+	function createBullet(opts) {
+		game.addBody( new Bullets(opts) );
+	}
 
 	function createInvaders() {
 		var invaders = [];
@@ -38,7 +49,6 @@
 
 	Game.prototype.update = function() {
 		this.ctx.clearRect(0,0,this.width, this.height);
-		this.player.update();
 		this.bodies.forEach(function forEachBody(body) {
 			body.update();
 		});
@@ -80,8 +90,8 @@
 	};
 
 
-	function Bullets (canvas) {
-		this.canvas = canvas;
+	function Bullets (opts) {
+		this.canvas = opts.canvas;
 		this.width = this.canvas.width;
 		this.height = this.canvas.height;
 		this.ctx = this.canvas.getContext('2d');
@@ -93,33 +103,28 @@
 			height: this.bulletSize * 2
 		};
 
-		this.bullets = [];
+		this.bullet = {
+			x: opts.pos.x,
+			y: opts.pos.y,
+			width: this.rect.width,
+			height: this.rect.height
+		};
 	}
 
 	Bullets.prototype.update = function() {
-		this.drawBullets();
+		this.drawBullet();
 	};
 
-	Bullets.prototype.add = function(opts) {
-		this.bullets.push({
-			x: opts.x,
-			y: opts.y,
-			width: this.rect.width,
-			height: this.rect.height
-		});
-	};
-
-	Bullets.prototype.drawBullets = function() {
+	Bullets.prototype.drawBullet = function() {
 		var rect = this.rect;
 		var speed = 6;
+		var bullet = this.bullet;
 
-		this.bullets.forEach(function eachBullet(bullet, index) {
-			if ( (bullet.y + bullet.height) <= (this.canvas.height - this.canvas.height) - 1 ) {
-				this.bullets.splice(index, 1);
-			} else {
-				this.ctx.fillRect( bullet.x, bullet.y -= speed, rect.width, rect.height);
-			}
-		}, this);
+		if ( (bullet.y + bullet.height) <= (this.canvas.height - this.canvas.height) - 1 ) {
+			game.removeBody();
+		} else {
+			this.ctx.fillRect( bullet.x, bullet.y -= speed, rect.width, rect.height);
+		}
 	};
 
 	function Player (canvas) {
@@ -135,12 +140,10 @@
 			height: this.playerSize
 		};
 
-		this.bullets = new Bullets( this.canvas );
 	}
 
 	Player.prototype.update = function() {
 		this.drawPlayer();
-		this.bullets.update();
 	};
 
 	Player.prototype.drawPlayer = function() {
@@ -169,9 +172,12 @@
 		this.ctx.fillRect( rect.x, rect.y, rect.width, rect.height);
 
 		if ( keys.isPressed(keys.SPACE) ) {
-			this.bullets.add({
-				x: (rect.x + rect.width / 2),
-				y: rect.y
+			createBullet({
+				canvas: this.canvas,
+				pos: {
+					x: (rect.x + rect.width / 2),
+					y: rect.y
+				}
 			});
 		}
 	};
