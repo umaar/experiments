@@ -21,8 +21,10 @@
 	};
 
 	Game.prototype.removeBody = function(body) {
-		var index = this.bodies.indexOf(body);
-		this.bodies.splice(index, 1);
+		if (body) {
+			var index = this.bodies.indexOf(body);
+			this.bodies.splice(index, 1);
+		}
 	};
 
 	function createBullet(opts) {
@@ -121,7 +123,7 @@
 		var bullet = this.bullet;
 
 		if ( (bullet.y + bullet.height) <= (this.canvas.height - this.canvas.height) - 1 ) {
-			game.removeBody();
+			game.removeBody(this);
 		} else {
 			this.ctx.fillRect( bullet.x, bullet.y -= speed, rect.width, rect.height);
 		}
