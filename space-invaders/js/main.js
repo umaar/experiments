@@ -4,8 +4,10 @@
 
 	function Game (opts) {
 		this.canvas = opts.canvas;
-		this.width = this.canvas.width;
-		this.height = this.canvas.height;
+
+		var height = Math.round(window.innerHeight * 0.95);
+		this.width = this.canvas.width = height / 2;
+		this.height = this.canvas.height = height;
 		this.ctx = this.canvas.getContext('2d');
 		this.player = new Player( this.canvas );
 		this.bodies = [];
@@ -121,6 +123,7 @@
 		var rect = this.rect;
 		var speed = 6;
 		var bullet = this.bullet;
+		this.ctx.fillStyle = "red";
 
 		if ( (bullet.y + bullet.height) <= (this.canvas.height - this.canvas.height) - 1 ) {
 			game.removeBody(this);
