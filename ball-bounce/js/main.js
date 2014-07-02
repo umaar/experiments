@@ -5,8 +5,9 @@
 	var ctx;
 	var radius = 20;
 	var x, y;
-	var vx = 0;
-	var g = 0.1;
+	var vx = 4;
+	var vy = 0;
+	var g = 0.8;
 
 
 	function drawCricle() {
@@ -20,12 +21,17 @@
 	}
 
 	function tick() {
-		vx += g;
-		y += vx;
+		x += vx;
+		vy += g;
+		y += vy;
 
 		if (y > (height - radius)) {
 			y = (height - radius);
-			vx = -vx;
+			vy *= -0.8;
+		}
+
+		if (x > (width + radius)) {
+			x = 0 - radius;
 		}
 
 		ctx.clearRect(0,0,300,400);
