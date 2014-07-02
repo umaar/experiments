@@ -36,8 +36,9 @@
 	function createInvaders() {
 		var invaders = [];
 		for (var i=0; i<15; i++) {
-			var x = ((i % 5) * 40) + 5;
+			var x = ((i % 5) * 50);
 			var y = ((i % 3) * 40) + 20;
+			console.log(x, y);
 			invaders.push(new Invader({
 				canvas: this.canvas,
 				x: x,
