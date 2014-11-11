@@ -34,6 +34,7 @@
 		if (getRandom() > regenerationThreshold) {
 			createparticles(respawnAmount);
 		}
+
 		requestAnimationFrame(animate);
 	}
 
@@ -44,7 +45,7 @@
 		this.vy = random( -(height * 0.05) ,1);
 		this.size = random(width * 0.02, width * 0.03);
 		this.colour = random(0, 360);
-		this.ttl = 1000;
+		this.ttl = 500;
 		this.bounceFactor = random(0.4, 0.7);
 		particles.push(this);
 	}
@@ -56,7 +57,7 @@
 		this.vy += 0.3;
 
 		if (this.y + this.size > height) {
-			this.size *= 0.99;
+			this.size *= 0.95;
 			this.y = height - this.size;
 			this.vy = -this.vy * this.bounceFactor;
 		}
@@ -64,7 +65,8 @@
 		canvas.beginPath();
 		canvas.arc(this.x, this.y, this.size, 0, 2 * Math.PI, false);
 		canvas.fill();
-		if (this.ttl-- < 0) {
+
+		if (this.ttl-- < 0 || this.size < 0.1) {
 			particles.splice(particles.indexOf(this), 1);
 		}
 	};
@@ -86,7 +88,7 @@
 	}
 
 	function start() {
-		width = height = Math.min(win.innerWidth, win.innerHeight) / 2;
+		width = height = Math.min(win.innerWidth, win.innerHeight) / 1.3;
 		canvas = createCanvas();
 		createparticles(particleAmount);
 		bindEvents();
