@@ -3,9 +3,9 @@
 	var canvasElm, canvas, width, height, trigger = false;
 	var particles = [];
 	var particleAmount = 10;
-	var defaultregenerationThreshold = 0.97;
+	var defaultregenerationThreshold = 0.986;
 	var regenerationThreshold = defaultregenerationThreshold;
-	var respawnAmount = 2;
+	var respawnAmount = 5;
 
 	function createCanvas() {
 		canvasElm = document.createElement('canvas');
@@ -78,13 +78,20 @@
 	}
 
 	function bindEvents() {
-		canvasElm.addEventListener('mouseover', function(e) {
-			regenerationThreshold = 0;
-		});
+		var eventMappings = {
+			'mousedown': 0.1,
+			'mouseup': defaultregenerationThreshold,
+			'mouseover': 0.8,
+			'mouseout': defaultregenerationThreshold
+		};
 
-		canvasElm.addEventListener('mouseout', function(e) {
-			regenerationThreshold = 0.97;
-		});
+		for (var eventKey in eventMappings) {
+			(function(key) {
+				canvasElm.addEventListener(key, function() {
+					regenerationThreshold = eventMappings[key];
+				});
+			}(eventKey));
+		}
 	}
 
 	function start() {
