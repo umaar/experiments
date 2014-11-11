@@ -43,10 +43,10 @@
 		this.vx = random(-width, width);
 		this.y = height * 0.4;
 		this.vy = random( -(height * 0.05) ,1);
-		this.size = random(width * 0.02, width * 0.03);
+		this.size = random(width * 0.01, width * 0.02);
 		this.colour = random(0, 360);
 		this.ttl = 500;
-		this.bounceFactor = random(0.4, 0.7);
+		this.bounceFactor = random(0.3, 0.5);
 		particles.push(this);
 	}
 
@@ -83,7 +83,7 @@
 		});
 
 		canvasElm.addEventListener('mouseout', function(e) {
-			defaultregenerationThreshold = 0.97;
+			regenerationThreshold = 0.97;
 		});
 	}
 
