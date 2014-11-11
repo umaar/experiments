@@ -1,28 +1,38 @@
 (function(win, doc) {
 
-	var canvas, width, height;
+	var canvasElm, canvas, width, height, trigger = false;
 	var particles = [];
 	var particleAmount = 10;
+	var defaultregenerationThreshold = 0.97;
+	var regenerationThreshold = defaultregenerationThreshold;
+	var respawnAmount = 2;
 
 	function createCanvas() {
-		var canvasElm = document.createElement('canvas');
+		canvasElm = document.createElement('canvas');
 		canvasElm.width = canvasElm.height = width;
 		doc.body.appendChild(canvasElm);
 		return canvasElm.getContext('2d');
 	}
 
-	function random(min,max) {
-		return Math.random() * (max-min) + min;
+	function getRandom() {
+		return Math.random();
+	}
+
+	function random(min, max) {
+		return getRandom() * (max-min) + min;
 	}
 
 	function animate() {
+		canvas.clearRect(0, 0, width, height);
 		canvas.fillStyle = 'black';
 		canvas.fillRect(0, 0, width, height);
+		canvas.globalCompositeOperation = 'lighter';
 		particles.forEach(function(particle) {
 			particle.draw();
 		});
-		if (Math.random() > 0.97) {
-			createparticles(1);
+
+		if (getRandom() > regenerationThreshold) {
+			createparticles(respawnAmount);
 		}
 		requestAnimationFrame(animate);
 	}
@@ -65,10 +75,21 @@
 		}
 	}
 
+	function bindEvents() {
+		canvasElm.addEventListener('mouseover', function(e) {
+			regenerationThreshold = 0;
+		});
+
+		canvasElm.addEventListener('mouseout', function(e) {
+			defaultregenerationThreshold = 0.97;
+		});
+	}
+
 	function start() {
 		width = height = Math.min(win.innerWidth, win.innerHeight) / 2;
 		canvas = createCanvas();
 		createparticles(particleAmount);
+		bindEvents();
 		requestAnimationFrame(animate);
 	}
 
