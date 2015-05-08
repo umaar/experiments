@@ -8,9 +8,31 @@
 				margin: 0;
 				overflow: hidden;
 			}
+
+			.line__horizontal,
+			.line_vertical {
+				position: absolute;
+				background: black;
+				opacity: 0.1;
+			}
+
+			.line__horizontal {
+				width: 100%;
+				height: 2px;
+				top: 50%;
+			}
+
+			.line_vertical {
+				height: 100%;
+				width: 2px;
+				left: 50%;
+			}
 		</style>
 	</head>
 	<body>
+		<div class="line__horizontal"></div>
+		<div class="line_vertical"></div>
+
 		<script src="three.js"></script>
 		<script src="main.js"></script>
 	</body>
