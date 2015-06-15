@@ -1,0 +1,14 @@
+html {
+	box-sizing: border-box;
+}
+
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+
+.circle {
+	background: green;
+	height: 40px;
+	width: 40px;
+	display: inline-block;
+}
