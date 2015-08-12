@@ -1,0 +1,12 @@
+
+
+.gifs img {
+	width: 100px;
+	height: 100px;
+	margin: 10px;
+	padding: 10px;
+}
+
+.gifs li {
+	display: inline-block;
+}

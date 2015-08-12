@@ -1,0 +1,85 @@
+{
+  "name": "cat-names",
+  "version": "1.0.2",
+  "description": "Get popular cat names",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sindresorhus/cat-names"
+  },
+  "bin": {
+    "cat-names": "cli.js"
+  },
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "files": [
+    "index.js",
+    "cli.js",
+    "cat-names.json"
+  ],
+  "keywords": [
+    "cli-app",
+    "cli",
+    "bin",
+    "word",
+    "words",
+    "list",
+    "array",
+    "random",
+    "rand",
+    "animal",
+    "cat",
+    "cats",
+    "kitten",
+    "name",
+    "names",
+    "female",
+    "male"
+  ],
+  "devDependencies": {
+    "ava": "0.0.4"
+  },
+  "gitHead": "3e01d0be64923b29ac875977dbb0e4b7fa2a1c5b",
+  "bugs": {
+    "url": "https://github.com/sindresorhus/cat-names/issues"
+  },
+  "homepage": "https://github.com/sindresorhus/cat-names",
+  "_id": "cat-names@1.0.2",
+  "_shasum": "6d09d12a65f9db79d706f3ab3cc455ed4f1adadd",
+  "_from": ".",
+  "_npmVersion": "2.5.1",
+  "_nodeVersion": "0.12.0",
+  "_npmUser": {
+    "name": "sindresorhus",
+    "email": "sindresorhus@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "sindresorhus",
+      "email": "sindresorhus@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "6d09d12a65f9db79d706f3ab3cc455ed4f1adadd",
+    "tarball": "http://registry.npmjs.org/cat-names/-/cat-names-1.0.2.tgz"
+  },
+  "format": "cjs",
+  "ignore": [
+    "node_modules"
+  ],
+  "registry": "npm",
+  "dependencies": {
+    "meow": "meow@^3.0.0",
+    "unique-random-array": "unique-random-array@^1.0.0",
+    "systemjs-json": "github:systemjs/plugin-json@^0.1.0"
+  }
+}
