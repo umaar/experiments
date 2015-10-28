@@ -1,14 +1,170 @@
 $(function() {
 
+	function animate24() {
+		dynamics.animate($('.circle')[0], {
+			width: 200,
+			height: 40
+		}, {
+			type: dynamics.gravity,
+			duration: 300,
+			 bounciness: 718,
+			 elasticity: 197
+		});
+	}
+
+	function animate23() {
+		dynamics.animate($('.circle')[0], {
+			width: 210,
+			height: 30
+		}, {
+			type: dynamics.gravity,
+			duration: 300,
+			 bounciness: 718,
+			 elasticity: 197,
+			 complete: animate24
+		});
+	}
+
+	function animate22() {
+		dynamics.animate($('.circle')[0], {
+			width: 200,
+			height: 20
+		}, {
+			type: dynamics.gravity,
+			duration: 300,
+			 bounciness: 718,
+			 elasticity: 197,
+			 complete: animate23
+		});
+	}
+
+	function animate21() {
+		dynamics.animate($('.circle')[0], {
+			width: 200,
+			height: 10
+		}, {
+			type: dynamics.gravity,
+			duration: 300,
+			 bounciness: 718,
+			 elasticity: 197,
+			 complete: animate22
+		});
+	}
+
+	function animate20() {
+		dynamics.animate($('.circle')[0], {
+			width: 500,
+			height: 5
+		}, {
+			type: dynamics.gravity,
+			duration: 200,
+			 bounciness: 718,
+			 elasticity: 197,
+			 complete: animate21
+		});
+	}
+
+	function animate19() {
+		dynamics.animate($('.circle')[0], {
+			width: 50,
+			height: 5
+		}, {
+			type: dynamics.gravity,
+			duration: 200,
+			 bounciness: 718,
+			 elasticity: 197,
+			 complete: animate20
+		});
+	}
+
+	function animate18() {
+		dynamics.animate($('.circle')[0], {
+			width: 100,
+			height: 10
+		}, {
+			type: dynamics.gravity,
+			duration: 200,
+			 bounciness: 718,
+			 elasticity: 197,
+			 complete: animate19
+		});
+	}
+
+	function animate17() {
+		dynamics.animate($('.circle')[0], {
+			width: 200,
+			height: 20
+		}, {
+			type: dynamics.gravity,
+			duration: 200,
+			 bounciness: 718,
+			 elasticity: 197,
+			 complete: animate18
+		});
+	}
+
+	function animate16() {
+		dynamics.animate($('.circle')[3], {
+			translateX: 60,
+			translateY: 50
+		}, {
+			type: dynamics.gravity,
+			duration: 100,
+			 bounciness: 718,
+			 elasticity: 197,
+			 complete: animate17
+		});
+	}
+
+	function animate15() {
+		dynamics.animate($('.circle')[2], {
+			translateX: 55,
+			translateY: 100
+		}, {
+			type: dynamics.gravity,
+			duration: 100,
+			 bounciness: 718,
+			 elasticity: 197,
+			 complete: animate16
+		});
+	}
+
+	function animate14() {
+		dynamics.animate($('.circle')[1], {
+			translateX: 50,
+			translateY: 150
+		}, {
+			type: dynamics.gravity,
+			duration: 100,
+			 bounciness: 718,
+			 elasticity: 197,
+			 complete: animate15
+		});
+	}
+
+	function animate13() {
+		dynamics.animate($('.circle')[0], {
+			borderRadius: 0,
+			opacity: 1
+		}, {
+			type: dynamics.gravity,
+			duration: 400,
+			 bounciness: 718,
+			 elasticity: 197,
+			 complete: animate14
+		});
+	}
+
 	function animate12() {
 		dynamics.animate($('.circle')[3], {
 			translateY: 50,
 			opacity: 1
 		}, {
 			type: dynamics.gravity,
-			duration: 400,
+			duration: 200,
 			 bounciness: 718,
-			 elasticity: 197
+			 elasticity: 197,
+			 complete: animate13
 		});
 	}
 
@@ -18,7 +174,7 @@ $(function() {
 			opacity: 1
 		}, {
 			type: dynamics.gravity,
-			duration: 700,
+			duration: 400,
 			 bounciness: 718,
 			 elasticity: 197,
 			 complete: animate12
@@ -31,7 +187,7 @@ $(function() {
 			opacity: 1
 		}, {
 			type: dynamics.gravity,
-			duration: 700,
+			duration: 600,
 			 bounciness: 718,
 			 elasticity: 197,
 			 complete: animate11
@@ -43,7 +199,7 @@ $(function() {
 			translateY: 200
 		}, {
 			type: dynamics.gravity,
-			duration: 1300,
+			duration: 900,
 			 bounciness: 718,
 			 elasticity: 197,
 			 complete: animate10
