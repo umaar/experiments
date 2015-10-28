@@ -2,8 +2,8 @@
 window.onload = start;
 
 function start() {
-  var width = 960,
-      height = 500;
+  var width = 400,
+      height = 400;
 
   var sample = poissonDiscSampler(width, height, 10);
 
