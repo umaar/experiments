@@ -1,94 +1,43 @@
+'use strict';
 $(function() {
 
-	function animate24() {
-		dynamics.animate($('.circle')[0], {
-			width: 200,
-			height: 40
-		}, {
-			type: dynamics.gravity,
-			duration: 300,
-			 bounciness: 718,
-			 elasticity: 197
+
+	function crazyRect(width, height) {
+		return new Promise(function(resolve, reject) {
+			dynamics.animate($('.circle')[0], {
+				width: width || 200,
+				height: height || 40
+			}, {
+				type: dynamics.gravity,
+				duration: 200,
+				 bounciness: 718,
+				 elasticity: 197,
+				 complete: resolve
+			});
 		});
 	}
 
-	function animate23() {
-		dynamics.animate($('.circle')[0], {
-			width: 210,
-			height: 30
-		}, {
-			type: dynamics.gravity,
-			duration: 300,
-			 bounciness: 718,
-			 elasticity: 197,
-			 complete: animate24
-		});
+	function startCrazyRect() {
+		crazyRect(100, 50)
+			.then( () => crazyRect(200, 10) )
+			.then( () => crazyRect(100, 50) )
+			.then( () => crazyRect(400, 20) )
+			.then( () => crazyRect(300, 40) )
+			.then( () => crazyRect(600, 50) )
+			.then( () => crazyRect(600, 10) )
+			.then( () => crazyRect(100, 70) )
+			.then( () => crazyRect(400, 5) )
+			.then( () => crazyRect(200, 10) )
+			.then( () => crazyRect(100, 50) )
+			.then( () => crazyRect(400, 20) )
+			.then( () => crazyRect(300, 40) )
+			.then( () => crazyRect(600, 50) )
+			.then( () => crazyRect(600, 10) )
+			.then( () => crazyRect(100, 70) )
+			.then( () => crazyRect(400, 5) )
+			.then(() => crazyRect(200, 20));
 	}
 
-	function animate22() {
-		dynamics.animate($('.circle')[0], {
-			width: 200,
-			height: 20
-		}, {
-			type: dynamics.gravity,
-			duration: 300,
-			 bounciness: 718,
-			 elasticity: 197,
-			 complete: animate23
-		});
-	}
-
-	function animate21() {
-		dynamics.animate($('.circle')[0], {
-			width: 200,
-			height: 10
-		}, {
-			type: dynamics.gravity,
-			duration: 300,
-			 bounciness: 718,
-			 elasticity: 197,
-			 complete: animate22
-		});
-	}
-
-	function animate20() {
-		dynamics.animate($('.circle')[0], {
-			width: 500,
-			height: 5
-		}, {
-			type: dynamics.gravity,
-			duration: 200,
-			 bounciness: 718,
-			 elasticity: 197,
-			 complete: animate21
-		});
-	}
-
-	function animate19() {
-		dynamics.animate($('.circle')[0], {
-			width: 50,
-			height: 5
-		}, {
-			type: dynamics.gravity,
-			duration: 200,
-			 bounciness: 718,
-			 elasticity: 197,
-			 complete: animate20
-		});
-	}
-
-	function animate18() {
-		dynamics.animate($('.circle')[0], {
-			width: 100,
-			height: 10
-		}, {
-			type: dynamics.gravity,
-			duration: 200,
-			 bounciness: 718,
-			 elasticity: 197,
-			 complete: animate19
-		});
-	}
 
 	function animate17() {
 		dynamics.animate($('.circle')[0], {
@@ -99,7 +48,7 @@ $(function() {
 			duration: 200,
 			 bounciness: 718,
 			 elasticity: 197,
-			 complete: animate18
+			 complete: startCrazyRect
 		});
 	}
 
